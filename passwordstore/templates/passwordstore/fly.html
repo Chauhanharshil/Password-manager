@@ -1,0 +1,20 @@
+<thead>
+    <tr>
+        <th scope="col">S.NO</th>
+        <th scope="col">App Name</th>
+        <th scope="col">Password</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<tbody>
+    {% for app_and_password in app_and_passwords %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{app_and_password.app_name}}</td>
+        <td>{{app_and_password.password_field}}</td>
+        <td><a class="delete_customer" href="#" data={{app_and_password.id}}> DELETE</a>/<a class="edit_pass" href="{% url 'passwordstore:editpassword' app_and_password.id %}"> Edit</a></td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+  

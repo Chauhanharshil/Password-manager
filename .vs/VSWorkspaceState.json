@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\passwordmanager",
+    "\\passwordstore",
+    "\\passwordstore\\templates",
+    "\\passwordstore\\templates\\passwordstore"
+  ],
+  "SelectedNode": "\\passwordstore\\views.py",
+  "PreviewInSolutionExplorer": false
+}

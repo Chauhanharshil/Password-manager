@@ -1,0 +1,63 @@
+{% extends "passwordstore/base.html" %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+    {% endif %}
+
+    
+    <div class="alert alert-dark" role="alert">
+        Create  your password
+    </div>
+    <select name="password_length" required>
+        <option selected="selected" disabled>select password length:</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+    </select><br />
+    <input type="checkbox" id="lower_case" name="lower_case" value="1">
+    <label for="lower_case"> Lower Case</label><br>
+    <input type="checkbox" id="upper_case" name="upper_case" value="2">
+    <label for="upper_case"> Upper Case</label><br>
+    <input type="checkbox" id="number" name="number" value="3">
+    <label for="number"> Numbers</label><br>
+    <input type="checkbox" id="special_char" name="special_char" value="4">
+    <label for="special_char"> Special Characters </label><br><br />
+    <input type="submit" value="submit" />
+</form>
+        {% if password %}
+<div class="alert alert-success" role="alert">
+    passwor is<br />{{password}}
+</div>
+        {% endif %}
+<p>
+    What about adding this password to your saved passwords list? <br />
+    Just enter app name and hit Add to your password list and it will be done
+</p>
+<form action="{% url 'passwordstore:add_pass' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="Enter app Name" name="appname" />
+    <input type="hidden" name="app_password" value="{{password}}">
+    <button type="submit">Add to your passwords list</button>
+
+</form>
+{% endblock %}

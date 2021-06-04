@@ -1,0 +1,10 @@
+{% extends "passwordstore/base.html" %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{post_form.as_table}}
+    </table>
+    <input type="submit" value="Update" />
+</form>
+{% endblock %}

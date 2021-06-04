@@ -1,0 +1,88 @@
+{% extends "passwordstore/base.html" %}
+{% block title %}
+Password Manager
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <form id='create_newform' method="POST">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                </table>
+
+                <button type="submit">ADD</button>
+                 
+            </form>
+        </div>
+        
+    </div>
+    <table class="table" id="table_post">
+        <thead>
+            <tr>
+                <th scope="col">S.NO</th>
+                <th scope="col">App Name</th>
+                <th scope="col">Password</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app_and_password in app_and_passwords %}
+            <tr id="record_{{app_and_password.id}}">
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{app_and_password.app_name}}</td>
+                <td>{{app_and_password.password_field}}</td>
+                <td><a class="delete_customer" href="#" data={{app_and_password.id}}> DELETE</a>/<a class="edit_pass" href="{% url 'passwordstore:editpassword' app_and_password.id %}"> Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#create_newform').submit(function () {
+                alert('hiiii');
+                event.preventDefault();
+
+                form = $(this).serialize();
+                $.ajax({
+                    url: 'ajax_newcreate/',
+                    method: 'post',
+                    data : form,
+                         success: function(result)
+                         {
+                            $('#table_post').html(result.posts)
+                document.getElementById("create_newform").reset();
+                         }
+                });
+
+
+            });
+
+            $('#table_post').on('click', '.delete_customer',function () {
+                event.preventDefault();
+
+                pk = $(this).attr('data');
+                $.ajax({
+                    url: 'ajax_delete_newcustomer',
+                    data: { 'pk': pk },
+                    success: function (data) {
+                        $('#table_post').html(data.posts)
+                    }
+                });
+
+
+            });
+            
+            
+
+        });
+
+    </script>
+    {% endblock %}
+
+
+
